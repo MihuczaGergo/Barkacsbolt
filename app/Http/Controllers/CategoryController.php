@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Requests\CategoryRequest;
+
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,7 @@ class CategoryController extends Controller
     public function addCategory(Request $request)
     {
         $category = new Category();
-        $category->name = $request->input('name');
+        $category->name = $request["name"];
         $category->save();
 
         return response()->json(['success' => 'Kategória sikeresen felvéve!']);
@@ -22,14 +25,14 @@ class CategoryController extends Controller
 
     public function showCategory(Request $request)
     {
-        $category = Category::findOrFail($request->input('id'));
+        $category = Category::findOrFail($request["id"]);
         return response()->json($category);
     }
 
     public function updateCategory(Request $request)
     {
-        $category = Category::findOrFail($request->input('id'));
-        $category->name = $request->input('name');
+        $category = Category::findOrFail($request["id"]);
+        $category->name = $request["name"];
         $category->save();
 
         return response()->json(['success' => 'Kategória sikeresen frissítve!']);
@@ -37,7 +40,7 @@ class CategoryController extends Controller
 
     public function deleteCategory(Request $request)
     {
-        $category = Category::findOrFail($request->input('id'));
+        $category = Category::findOrFail($request["id"]);
         $category->delete();
 
         return response()->json(['success' => 'Kategória sikeresen törölve!']);

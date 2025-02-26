@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
     public function getProduct(){
         $products = Product::all();
         return response()->json($products);
-
     }
 
     public function addProduct(Request $request)
     {
         $product = new Product();
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->description = $request->input('description');
+        $product->name = $request["name"];
+        $product->price = $request["price"];
+        $product->description = $request["description"];
         $product->save();
 
         return response()->json(['success' => 'Termék sikeresen felvéve!']);
@@ -25,16 +25,16 @@ class ProductController extends Controller
 
     public function showProduct(Request $request)
     {
-       $product = Product::with('category')->findOrFail("id");
+       $product = Product::with('category')->findOrFail($request["id"]);
        return response()->json($product);
     }
 
     public function updateProduct(Request $request)
     {
-        $product = Product::findorFail($request->input('id'));
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->description = $request->input('description');
+        $product = Product::findorFail($request["id"]);
+        $product->name = $request["name"];
+        $product->price = $request["price"];
+        $product->description = $request["description"];
         $product->save();
 
         return response()->json(['success' => 'Termék sikeresen frissítve!']);
@@ -42,10 +42,9 @@ class ProductController extends Controller
 
     public function deleteProduct(Request $request)
     {
-        $product = Product::findorFail($request->input('id'));
+        $product = Product::findorFail($request["id"]);
         $product->delete();
 
         return response()->json(['success' => 'Termék sikeresen törölve!']);
     }
-    
 }

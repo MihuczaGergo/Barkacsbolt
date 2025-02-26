@@ -14,4 +14,14 @@ class Orders extends Model
         'customers_id',
         'product_id',
     ];
+
+    public function customers()
+    {
+        return $this->belongsTo(Customers::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
