@@ -12,6 +12,7 @@ class Product extends Model
         'name',
         'price',
         'description',
+        'category_id',
     ];
 
     public function category()
