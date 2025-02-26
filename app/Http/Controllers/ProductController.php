@@ -8,7 +8,7 @@ class ProductController extends Controller
 {
     public function getProduct(){
         $products = Product::all();
-        return view('product', ['products' => $products]);
+        return response()->json($products);
 
     }
 
@@ -22,4 +22,30 @@ class ProductController extends Controller
 
         return response()->json(['success' => 'Termék sikeresen felvéve!']);
     }
+
+    public function showProduct(Request $request)
+    {
+       $product = Product::with('category')->findOrFail("id");
+       return response()->json($product);
+    }
+
+    public function updateProduct(Request $request)
+    {
+        $product = Product::findorFail($request->input('id'));
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->save();
+
+        return response()->json(['success' => 'Termék sikeresen frissítve!']);
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        $product = Product::findorFail($request->input('id'));
+        $product->delete();
+
+        return response()->json(['success' => 'Termék sikeresen törölve!']);
+    }
+    
 }
