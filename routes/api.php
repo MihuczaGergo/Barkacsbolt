@@ -15,4 +15,9 @@ Route::post("/login", [UserController::class, "login"]);
 Route::post("/logout", [UserController::class, "logout"]);
 
 Route::post('/addProduct',[ProductController::class, 'addProduct']);
+Route::post('/showProduct',[ProductController::class, 'showProduct']);
+Route::put('/updateproduct',[ProductController::class, 'updateProduct']);
+Route::delete('/deleteProduct',[ProductController::class, 'deleteProduct']);
 Route::post('/addcategory',[CategoryController::class, 'addCategory']);
+Route::put('/updatecategory',[CategoryController::class,'updateCategory']);
+Route::delete('/deletecategory',[CategoryController::class, 'deleteCategory']);

@@ -18,6 +18,7 @@ class ProductController extends Controller
         $product->name = $request["name"];
         $product->price = $request["price"];
         $product->description = $request["description"];
+        $product->category_id = $request["category_id"];
         $product->save();
 
         return response()->json(['success' => 'Termék sikeresen felvéve!']);
@@ -35,6 +36,7 @@ class ProductController extends Controller
         $product->name = $request["name"];
         $product->price = $request["price"];
         $product->description = $request["description"];
+        $product->category_id = $request["category_id"];
         $product->save();
 
         return response()->json(['success' => 'Termék sikeresen frissítve!']);
