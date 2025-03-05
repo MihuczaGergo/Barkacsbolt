@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CustomersController extends Controller
 {
     public function register(Request $request) {
-        $user = Custumers::create([
+        $customer = Custumers::create([
             "name" => $request["name"],
             "email" => $request["email"],
             "password" => bcrypt($request["password"]),
@@ -20,9 +20,9 @@ class CustomersController extends Controller
 
     public function login(Request $request) {
         if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])) {
-            $authUser = Auth::user();
-                $token = $authUser->createToken($authUser->name."Token")->plainTextToken;
-                $data["user"] = ["user" => $authUser->name];
+            $authCustomer = Auth::user();
+                $token = $authCustomer->createToken($authCustomer->name."Token")->plainTextToken;
+                $data["user"] = ["user" => $authCustomer->name];
                 $data["token"] = $token;
                 return response() -> json([$data, "Sikeres bejelentkezés!"]);
             }
