@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,6 +14,11 @@ Route::get('/user', function (Request $request) {
 Route::post("/register", [UserController::class, "register"]);
 Route::post("/login", [UserController::class, "login"]);
 Route::post("/logout", [UserController::class, "logout"]);
+
+Route::get("/get-role", [RoleController::class, "getRoles"]);
+Route::post("/add-role", [RoleController::class, "addRole"]);
+Route::put("/update-role", [RoleController::class, "updateRoleName"]);
+Route::delete("/delete-role", [RoleController::class, "deleteRole"]);
 
 Route::post('/addProduct',[ProductController::class, 'addProduct']);
 Route::post('/showProduct',[ProductController::class, 'showProduct']);

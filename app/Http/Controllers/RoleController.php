@@ -20,10 +20,10 @@ class RoleController extends Controller
     }
 
     public function updateRoleName(Request $request) {
-        $role = Role::find("id");
+        $role = Role::find($request["id"]);
         $role -> name = $request["name"];
         $role -> update();
-        return response() -> json([$role, "Sikeres jogosultság né átírás!"]);
+        return response() -> json([$role, "Sikeres jogosultság név átírás!"]);
     }
 
     public function deleteRole(Request $request) {

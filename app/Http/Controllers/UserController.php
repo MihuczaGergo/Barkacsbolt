@@ -8,16 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function addUser(Request $request) {
+    public function register(Request $request) {
         $user = User::create([
             "name" => $request["name"],
             "password" => bcrypt($request["password"]),
-            "phone" => $request["phone"],
             "email" => $request["email"],
             "address" => $request["address"],
-            "birth_date" => $request["birth_date"]
+            "role_id" => $request["role_id"]
         ]);
-        return response() -> json([$name, "Sikeres dolgozó felvétel!"]);
+        return response() -> json([$user -> name, "Sikeres dolgozó felvétel!"]);
     }
 
     public function login(Request $request) {
