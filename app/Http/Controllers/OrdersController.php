@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Orders;
 
 class OrdersController extends Controller
 {
@@ -16,7 +17,7 @@ class OrdersController extends Controller
         $order = new Orders();
         $order->total = $request["total"];
         $order->status = $request["status"];
-        $order->customers_id = $request["customers_id"];
+        $order->user_id = $request["user_id"];
         $order->product_id = $request["product_id"];
         $order->save();
 
