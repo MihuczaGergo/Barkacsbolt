@@ -17,6 +17,8 @@ Route::post("/register", [UserController::class, "register"]);
 Route::post("/login", [UserController::class, "login"]);
 Route::post("/logout", [UserController::class, "logout"]);
 
+Route::get("users", [UserController::class, "getUsers"]);
+
 Route::get("/get-role", [RoleController::class, "getRoles"]);
 Route::post("/add-role", [RoleController::class, "addRole"]);
 Route::put("/update-role", [RoleController::class, "updateRoleName"]);

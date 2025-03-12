@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Http\Requests\RoleRequest;
 
 class RoleController extends Controller
 {
@@ -12,14 +13,16 @@ class RoleController extends Controller
         return response() -> json($roles);
     }
 
-    public function addRole(Request $request) {
+    public function addRole(RoleRequest $request) {
+        $request -> validated();
         $role = new Role();
         $role -> name = $request["name"];
         $role -> save();
         return response() -> json([$role, "Sikeres jogosultság felvétel!"]);
     }
 
-    public function updateRoleName(Request $request) {
+    public function updateRoleName(RoleRequest $request) {
+        $request -> validated();
         $role = Role::find($request["id"]);
         $role -> name = $request["name"];
         $role -> update();
@@ -30,5 +33,11 @@ class RoleController extends Controller
         $role = Role::find($request["id"]);
         $role -> delete();
         return response() -> json([$role, "Sikeres jogosultság törlés!"]);
+    }
+
+    public function getRoleId($roleName) {
+        $role = Role::where("name", $roleName) -> first();
+        $id = $role -> id;
+        return $id;
     }
 }

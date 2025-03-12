@@ -27,10 +27,7 @@ class UserRegisterRequest extends FormRequest
             "name" => "required|max:15|unique:users,name",
             "email" => "required|email|unique:users,email",
             "password" => ["required","min:6","regex:/[a-z]/","regex:/[A-Z]/","regex:/[0-9]/" ],
-            "confirm_password" => "required|same:password",
-            "phone" => "required|unique:users,phone",
-            "address" => "required",
-            "birth_date" => "required"
+            "address" => "required"
         ];
     }
 
@@ -44,11 +41,7 @@ class UserRegisterRequest extends FormRequest
             "password.required" => "Jelszó kötelező!",
             "password.min" => "Túl rövid jelszó!",
             "password.regex" => "A jelszónak tartalmazia kell kisbetűt, nagybetűt és számot!",
-            "confirm_password.same" => "A két jelszó nem egyezik!",
-            "phone.required" => "Telefonszám kötelező!",
-            "phone.unique" => "Telefonszám létezik!",
-            "address.required" => "Cím megadása kötelező!",
-            "birth_date.required" => "Születési dátum megadása kötelező!"
+            "address.required" => "Cím megadása kötelező!"
         ];
     }
 
