@@ -17,18 +17,31 @@ Route::post("/register", [UserController::class, "register"]);
 Route::post("/login", [UserController::class, "login"]);
 Route::post("/logout", [UserController::class, "logout"]);
 
-Route::get("users", [UserController::class, "getUsers"]);
 
-Route::get("/get-role", [RoleController::class, "getRoles"]);
-Route::post("/add-role", [RoleController::class, "addRole"]);
-Route::put("/update-role", [RoleController::class, "updateRoleName"]);
-Route::delete("/delete-role", [RoleController::class, "deleteRole"]);
 
-Route::post('/addProduct',[ProductController::class, 'addProduct']);
-Route::post('/showProduct',[ProductController::class, 'showProduct']);
-Route::put('/updateproduct',[ProductController::class, 'updateProduct']);
-Route::delete('/deleteProduct',[ProductController::class, 'deleteProduct']);
-Route::post('/addcategory',[CategoryController::class, 'addCategory']);
-Route::put('/updatecategory',[CategoryController::class,'updateCategory']);
-Route::delete('/deletecategory',[CategoryController::class, 'deleteCategory']);
-Route::post('/addorder',[OrdersController::class, 'addOrder']);
+
+Route::middleware( "auth:sanctum" )->group( function(){
+
+    Route::post('/addorder',[OrdersController::class, 'addOrder']);
+    Route::put('/updateorder',[OrdersController::class, 'updateOrder']);
+    Route::delete('/deleteorder',[OrdersController::class, 'deleteOrder']);
+    Route::get('/getorder',[OrdersController::class, 'getOrders']);
+
+    Route::post('/addproduct',[ProductController::class, 'addProduct']);
+    Route::post('/showproduct',[ProductController::class, 'showProduct']);
+    Route::put('/updateproduct',[ProductController::class, 'updateProduct']);
+    Route::delete('/deleteproduct',[ProductController::class, 'deleteProduct']);
+    Route::get('/getproduct',[ProductController::class,'getproduct']);
+
+    Route::post('/addcategory',[CategoryController::class, 'addCategory']);
+    Route::put('/updatecategory',[CategoryController::class,'updateCategory']);
+    Route::delete('/deletecategory',[CategoryController::class, 'deleteCategory']);
+    Route::get('/getcategory',[CategoryController::class,'getCategory']);
+
+    Route::get("users", [UserController::class, "getUsers"]);
+
+    Route::get("/get-role", [RoleController::class, "getRoles"]);
+    Route::post("/add-role", [RoleController::class, "addRole"]);
+    Route::put("/update-role", [RoleController::class, "updateRoleName"]);
+    Route::delete("/delete-role", [RoleController::class, "deleteRole"]);
+    });
