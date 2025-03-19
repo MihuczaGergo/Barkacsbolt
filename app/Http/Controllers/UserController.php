@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -23,16 +24,36 @@ class UserController extends Controller
     }
 
     public function login(UserLoginRequest $request) {
-        $request -> validated();
+        $request->validated();
         if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])) {
+            $actualTime = Carbon::now();
             $authUser = Auth::user();
-                $token = $authUser->createToken($authUser->name."Token")->plainTextToken;
-                $data["user"] = ["user" => $authUser->name];
+            $bannedTime = (new BannerController) -> getBannedTime($authUser -> email);
+            (new BannerController)->resetLoginCounter($authUser -> email);
+            if($bannedTime < $actualTime) {
+                (new BannerController) -> resetBannedTime($authUser -> email);
+                $token = $authUser -> createToken($authUser -> name."Token") -> plainTextToken;
+                $data["user"] = ["user" => $authUser -> name];
+                $data["time"] = $bannedTime;
+                $data["admin"] = $authUser -> admin;
                 $data["token"] = $token;
                 return response() -> json([$data, "Sikeres bejelentkezés!"]);
             }
+            else {
+                return response() -> json(["Azonosítási hiba!", ["Következő lehetőség: ", $bannedTime]]); 
+            }
+        }
         else {
-            return response() -> json("Hibás e-mail vagy jelszó!");
+            $loginCounter = (new BannerController) -> getLoginCounter($request["email"]);
+            if($loginCounter < 3) {
+                (new BannerController) -> setLoginCounter($request["email"]);
+                return response() -> json("Hibás felhasználónév vagy jelszó!");
+            }
+            else {
+                (new BannerController) -> setBannedTime($request["email"]);
+                $bannedTime = (new BannerController) -> getBannedTime($request["email"]);
+                return response() -> json(["Azonosítási hiba!", ["Következő lehetőség: ", $bannedTime]]);
+            }
         }
     }
 
